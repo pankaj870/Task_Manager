@@ -1,0 +1,82 @@
+
+{% extends "index.html" %}
+
+{% block task_form %}
+<div class="card container text-center col-sm-6 mb-3 mb-sm-12 bg-black-400">
+<form action="" method="post" class="card"> 
+    {% csrf_token %}
+
+    <div class="card-header text-bold bg-gray">
+      <h1>ToDO</h1>
+    </div> 
+
+<div class="card-body">
+  <div class="mb-3 ">
+    <h4 for="task_heading" class="form-label col text-bold" >Task Heading</h4>
+    <input type="text" class="form-control" id="FormControlInput1" name="name" placeholder="Task Heading" required>
+  </div>  
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Discription</label>
+    <textarea class="form-control" id="FormControlTextarea1" name="discription" rows="3" required></textarea>
+  </div>
+  
+  <select class="form-select mb-3" aria-label="" name="status" required>
+    <option selected>Status</option>
+    <option value="COM">Complete</option>
+    <option value="PEN">Pending</option>
+    <option value="REJ">Rejected</option>
+  </select>
+  <button type="submit" class="btn btn-primary mb-3">Submit</button>
+</div>
+</from> 
+</div>
+{% endblock %}
+
+
+
+{% block data_table %}
+
+<div class="container text-center">
+
+  {% for task in all_task %}
+  <form method="post"> 
+    {% csrf_token %}
+<div class="card container text-center mb-3 mb-sm-12" style="width: 50rem;">
+
+  <div class="row g-0 text-center">
+    <div class="text-start col-sm-6 col-md-8">{{task.name}}</div>
+    <div class="text-end col-6 col-md-4">{{task.date_time}}</div>
+  </div>
+
+  <div>
+    <textarea class="form-control" style="height: 8rem;" id="discription" name="up_discription" rows="3">{{task.discription}}</textarea>
+  </div>
+
+
+  <div class="btn-group mb-3" role="group" aria-label="Basic example">
+      <button type="button" style="height: 2rem;" class="btn">
+        <a href={% url 'data_table' task.id %} class="btn btn-primary">About Task</a>
+      </button>
+      <button type="button" style="height: 2rem;" class="btn">
+        <a href={% url 'delete_task' task.id %} class="btn btn-danger">Delete Task</a>
+      </button>
+      <button type="button"  style="height: 2rem" class="btn"> 
+        <select class="form-select mb-3 btn-success" id="status" name="up_status" required>
+          <option value="">Select Status</option>
+          <option value="COM" {% if task.status == 'COM' %}selected{% endif %}>Complete</option>
+          <option value="PEN" {% if task.status == 'PEN' %}selected{% endif %}>Pending</option> 
+          <option value="REJ" {% if task.status == 'REJ' %}selected{% endif %}>Rejected</option>
+        </select>
+      </button>
+      <button type="button" style="height: 2rem;" class="btn">
+        <a href={% url 'update_task' task.id %} class="btn btn-info">Update</a>
+      </button>
+
+  </div>
+</div>
+</from>
+
+   {% endfor %}
+  </div>
+{% endblock data_table %}

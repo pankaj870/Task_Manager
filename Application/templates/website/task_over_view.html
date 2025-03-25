@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block data_table %}
+  {% csrf_token %}
+<div class="card col-sm-6 mb-3 mb-sm-0 bg-black text-white border-2px">
+  <div class="mb-3">
+    
+    <h1>{{task.name}}</h1>
+    <p> {{task.discription}}</p>
+
+    <label for="status" class="form-label mt-3">{{task.status}}</label>
+    
+</div>
+{% endblock data_table %}
